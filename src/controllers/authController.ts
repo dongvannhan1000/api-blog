@@ -31,7 +31,12 @@ export const login = (req: Request, res: Response, next: NextFunction) => {
 export const logout = (req: Request, res: Response, next: NextFunction) => {
   req.logout((err) => {
     if (err) return next(err);
-    res.status(200).json({ message: 'Logout successful' });
+    req.session.destroy((err) => {
+      if (err) {
+        return next(err);
+      }
+      res.status(200).json({ message: 'Logout successful' });
+    });
   });
 };
 

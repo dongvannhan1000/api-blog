@@ -60,6 +60,8 @@ model Session {
   sid       String   @unique
   data      String   
   expiresAt   DateTime
+
+  @@map("sessions")
 }
 
 enum Role {

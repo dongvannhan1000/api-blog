@@ -10,8 +10,8 @@ export const sessionMiddleware = session({
     maxAge: 7 * 24 * 60 * 60 * 1000 // ms
   },
   secret: process.env.SESSION_SECRET || 'your-secret-key',
-  resave: true,
-  saveUninitialized: true,
+  resave: false,
+  saveUninitialized: false,
   store: new PrismaSessionStore(
     prisma as unknown as IPrisma<'session'>,
     {

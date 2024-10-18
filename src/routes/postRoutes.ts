@@ -4,6 +4,8 @@ import * as postController from '../controllers/postController';
 
 const router = express.Router();
 
-router.post('/posts', isAuth, postController.createPost);
+router.post('/api/posts', isAuth, postController.createPost);
+router.get('/api/posts/:id', postController.getPost);
+router.get('/api/posts', postController.getAllPosts);
 
 export default router;
