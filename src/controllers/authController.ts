@@ -1,6 +1,7 @@
 import { Request, Response, NextFunction } from 'express';
 import * as authService from '../services/authService';
 import passport from 'passport';
+import jwt from 'jsonwebtoken';
 
 export const register = async (req: Request, res: Response, next: NextFunction) => {
   try {
@@ -10,21 +11,16 @@ export const register = async (req: Request, res: Response, next: NextFunction) 
     next(error);
   }
 };
-
 export const login = (req: Request, res: Response, next: NextFunction) => {
   passport.authenticate('local', (err: any, user: any, info: any) => {
     if (err) {
       return next(err);
     }
     if (!user) {
-      return res.status(400).json({ message: 'Đăng nhập thất bại', info });
+      return res.status(400).json({ message: 'Login fail', info });
     }
-    req.logIn(user, (err) => {
-      if (err) {
-        return next(err);
-      }
-      return res.json({ message: 'Đăng nhập thành công', user });
-    });
+    const token = jwt.sign({ id: user.id }, process.env.JWT_SECRET || 'your_jwt_secret', { expiresIn: '1h' });
+    return res.json({ message: 'Login successful', token });
   })(req, res, next);
 };
 

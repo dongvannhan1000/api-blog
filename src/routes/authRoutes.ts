@@ -1,7 +1,6 @@
 // authRoutes.ts
 
 import express from 'express';
-import passport from 'passport';
 import * as authController from '../controllers/authController';
 import { validateRegistration, validate } from '../middleware/validation';
 

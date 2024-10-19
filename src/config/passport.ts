@@ -1,4 +1,5 @@
 import passport from 'passport';
+import jwtStrategy from './passport-jwt';
 import { Strategy as LocalStrategy } from 'passport-local';
 import { PrismaClient } from '@prisma/client';
 import bcrypt from 'bcryptjs';
@@ -19,6 +20,8 @@ passport.use(new LocalStrategy({ usernameField: 'email' }, async (email, passwor
     return done(error);
   }
 }));
+
+passport.use(jwtStrategy);
 
 passport.serializeUser((user: any, done) => {
   done(null, user.id);
