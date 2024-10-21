@@ -3,6 +3,7 @@ import dotenv from 'dotenv';
 import passport from './config/passport';
 import authRoutes from './routes/authRoutes';
 import postRoutes from './routes/postRoutes';
+import commentRoutes from './routes/commentRoutes';
 import { sessionMiddleware } from './config/session';
 import { errorHandler } from './middleware/errorHandler';
 import methodOverride from 'method-override';
@@ -24,6 +25,7 @@ app.get('/', (req, res) => {
 
 app.use('/', authRoutes);
 app.use('/', postRoutes);
+app.use('/', commentRoutes);
 
 app.use(errorHandler);
 

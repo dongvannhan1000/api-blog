@@ -36,6 +36,24 @@ export const logout = (req: Request, res: Response, next: NextFunction) => {
   });
 };
 
+export const refreshToken = (req: Request, res: Response) => {
+  const token = req.body.token;
+
+  if (!token) {
+    return res.status(401).json({ message: 'No token provided' });
+  }
+
+  jwt.verify(token, process.env.JWT_SECRET || 'your_jwt_secret', (err: jwt.JsonWebTokenError | null, decoded: any) => {
+    if (err) {
+      return res.status(401).json({ message: 'Token is not valid' });
+    }
+
+    // Tạo token mới
+    const newToken = jwt.sign({ id: decoded.id }, process.env.JWT_SECRET || 'your_jwt_secret', { expiresIn: '1h' });
+    return res.json({ message: 'Token refreshed', token: newToken });
+  });
+};
+
 export const profile = (req: Request, res: Response) => {
   res.json(req.user);
 };
